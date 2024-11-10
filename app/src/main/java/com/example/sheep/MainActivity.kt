@@ -5,9 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,26 +71,37 @@ fun BotaoDeal() {
                 alignment = Alignment.CenterStart,
                 contentDescription = null
             )
-            Spacer(
+
+            VerticalDivider(
                 modifier = Modifier
-                    .width(15.dp)
+                    .padding(end = 15.dp)
+                    .fillMaxHeight()
+                    .width(1.dp),
+                color = Color.White
             )
+
             Text(
-                "Buy Batman: Arkham Knight",
+                "Batman: Arkham Knight",
                 color = Color.White,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterVertically)
 
             )
-            Spacer(
+
+            VerticalDivider(
                 modifier = Modifier
-                    .width(45.dp)
+                    .padding(start = 24.dp , end = 15.dp)
+                    .fillMaxHeight()
+                    .width(1.dp),
+                color = Color.White
             )
+
             Text(
                 "20.00€",
                 color = Color.White,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterVertically)
+
             )
         }
     }
@@ -99,51 +109,48 @@ fun BotaoDeal() {
 
 @Composable
 fun InfoDeal() {
-    Box(
+    Row(
         modifier = Modifier
             .padding(start = 15.dp, end = 15.dp, top = 15.dp)
             .height(50.dp)
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.backgroundBotaoColor)
-            .padding(start = 15.dp , end = 5.dp)
-
+            .padding(start = 25.dp),
+        verticalAlignment = Alignment.CenterVertically
     )
-    {
-        Row(
-        )
         {
             Text(
                 "Loja",
                 color = Color.White,
                 modifier = Modifier
-                    .fillMaxHeight()
-
-
             )
-            Spacer(
+
+            VerticalDivider(
                 modifier = Modifier
-                    .width(15.dp)
+                    .padding(start = 15.dp, end = 15.dp)
+                    .fillMaxHeight()
+                    .width(1.dp),
+                    color = Color.White
             )
+
             Text(
                 "Jogo",
                 color = Color.White,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .align(alignment = Alignment.CenterVertically)
             )
-            Spacer(
+
+            VerticalDivider(
                 modifier = Modifier
-                    .width(150.dp)
+                    .padding(start = 160.dp , end = 15.dp)
+                    .fillMaxHeight()
+                    .width(1.dp),
+                color = Color.White
             )
             Text(
                 "Preço",
                 color = Color.White,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .align(alignment = Alignment.CenterVertically)
             )
-        }
-
     }
 
 }
