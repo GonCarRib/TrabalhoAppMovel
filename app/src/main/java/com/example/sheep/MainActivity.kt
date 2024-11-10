@@ -33,7 +33,16 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             SheepTheme{
-                     MyApp()
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = MaterialTheme.colorScheme.backgroundColor),
+                    contentPadding = PaddingValues(10.dp)
+                ) {
+                    items(20) {
+                        botaoDeal()
+                    }
+                }
             }
         }
     }
@@ -41,57 +50,51 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyApp() {
-    LazyColumn(
+fun botaoDeal() {
+    Button(
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
+        onClick = { onClick() },
         modifier = Modifier
+            .height(80.dp)
             .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.backgroundColor),
-        contentPadding = PaddingValues(10.dp)
-
-    ) {
-        items(20) {
-            Button(
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
-                onClick = { onClick() },
-                modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp)
+            .padding(bottom = 10.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .align(alignment = Alignment.CenterVertically)
+                .fillMaxWidth()
+        )
+        {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                alignment = Alignment.CenterStart,
+                contentDescription = null
             )
-            {
-                Row(
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterVertically)
-                        .fillMaxWidth()
-                )
-                {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                        alignment = Alignment.CenterStart,
-                        contentDescription = null
-                    )
-                    Spacer(
-                        modifier = Modifier.width(15.dp)
-                    )
-                    Text(
-                        "Buy Batman: Arkham Knight",
-                        color = Color.White,
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
+            Spacer(
+                modifier = Modifier.width(15.dp)
+            )
+            Text(
+                "Buy Batman: Arkham Knight",
+                color = Color.White,
+                modifier = Modifier.align(alignment = Alignment.CenterVertically)
 
-                    )
-                    Spacer(
-                        modifier = Modifier.width(45.dp)
-                    )
-                    Text(
-                        "20.00€",
-                        color = Color.White,
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
-                    )
-                }
-
-            }
+            )
+            Spacer(
+                modifier = Modifier.width(45.dp)
+            )
+            Text(
+                "20.00€",
+                color = Color.White,
+                modifier = Modifier.align(alignment = Alignment.CenterVertically)
+            )
         }
     }
+}
+
+@Composable
+fun infoDeal() {
+
 }
 
 fun onClick() {
