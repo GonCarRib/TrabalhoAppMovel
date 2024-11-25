@@ -24,7 +24,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.lazy.items
 import com.example.sheep.ui.theme.SheepTheme
+
+val gameDeals = List(20) { _ ->
+    GameDeal(
+        internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
+        title = "Deus Ex: Human Revolution - Director's Cut ",
+        metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
+        dealID = "HhzMJAgQYGZ++FPpBG+RFcuUQZJO3KXvlnyYYGwGUfU=",
+        storeID = "1",
+        gameID = "102249",
+        salePrice = "2.99",
+        normalPrice = "19.99",
+        isOnSale = "1",
+        savings = "85.042521",
+        metacriticScore = "91",
+        steamRatingText = "Very Positive",
+        steamRatingPercent = "92",
+        steamRatingCount = "17993",
+        steamAppID = "238010",
+        releaseDate = 1382400000,
+        lastChange = 1621536418,
+        dealRating = "9.6",
+        thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
+    )
+}
 
 
 class MainActivity : ComponentActivity() {
@@ -40,8 +65,8 @@ class MainActivity : ComponentActivity() {
                         .padding(top = 65.dp)
                         .padding(10.dp)
                 ) {
-                    items(20) {
-                        BotaoDeal()
+                    items(gameDeals) { gameDeal ->
+                        GameDealButton(gameDeal)
                     }
                 }
                 InfoDeal()
@@ -101,58 +126,48 @@ fun InfoDeal() {
 }
 
 @Composable
-fun BotaoDeal() {
+fun GameDealButton(gameDeal: GameDeal) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
-        onClick = { onClick() },
+        onClick = {
+
+        },
         modifier = Modifier
             .height(80.dp)
             .fillMaxWidth()
             .padding(bottom = 10.dp)
-    )
-    {
+    ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-
-        {
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                alignment = Alignment.CenterStart,
-                contentDescription = null
+                contentDescription = null,
+                alignment = Alignment.CenterStart
             )
 
-            Spacer(modifier = Modifier
-                .padding(end = 25.dp)
-            )
+            Spacer(modifier = Modifier.padding(end = 25.dp))
 
             Text(
-                "Batman: Arkham Knight",
+                gameDeal.title,
                 color = Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterVertically)
-
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            Spacer(modifier = Modifier
-                .padding(end = 70.dp)
-            )
+            Spacer(modifier = Modifier.padding(end = 70.dp))
 
             Text(
-                "20.00€",
+                "${gameDeal.salePrice}€",
                 color = Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
     }
 }
 
 
-fun onClick() {
-    //haha
-}
+
+
 
 
 
