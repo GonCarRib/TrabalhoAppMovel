@@ -30,7 +30,7 @@ import com.example.sheep.ui.theme.SheepTheme
 val gameDeals = List(20) { _ ->
     GameDeal(
         internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
-        title = "Deus Ex: Human Revolution - Director's Cut ",
+        title = "Deus Ex Human Revoluti",
         metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
         dealID = "HhzMJAgQYGZ++FPpBG+RFcuUQZJO3KXvlnyYYGwGUfU=",
         storeID = "1",
@@ -157,7 +157,7 @@ fun GameDealButton(gameDeal: GameDeal) {
             Spacer(modifier = Modifier.padding(end = 70.dp))
 
             Text(
-                "${gameDeal.salePrice}€",
+                gameDeal.salePrice+" €",
                 color = Color.White,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
