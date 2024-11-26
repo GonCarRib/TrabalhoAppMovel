@@ -1,19 +1,14 @@
-package com.example.sheep.ui.theme
+package com.example.sheep
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,18 +22,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
-import com.example.sheep.GameDeal
-import com.example.sheep.R
-import com.example.sheep.backgroundBotaoColor
-import com.example.sheep.backgroundColor
-import com.example.sheep.gameDeals
-import com.example.sheep.ui.theme.SheepTheme
+import com.example.sheep.ui.theme.backgroundBotaoColor
+import com.example.sheep.ui.theme.backgroundColor
 
 @Composable
 fun EcraHome() {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .background(color = MaterialTheme.colorScheme.backgroundColor)
             .padding(top = 65.dp)
             .padding(10.dp)
@@ -55,12 +47,13 @@ fun EcraWishlist() {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .background(color = MaterialTheme.colorScheme.backgroundColor)
             .padding(top = 65.dp)
             .padding(10.dp)
     ) {
-        items(gameDeals) { gameDeal ->
-            GameDealButton(gameDeal)
+        items(wishlistDeals) { wishlistGame ->
+            WishlistButton(wishlistGame)
         }
     }
     InfoDeal()
@@ -145,12 +138,69 @@ fun GameDealButton(gameDeal: GameDeal) {
             )
 
             Spacer(modifier = Modifier.padding(end = 70.dp))
+            if (gameDeal.salePrice<10f){
+                Text(
+                    gameDeal.salePrice.toString() + "€",
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }else{
+                Text(
+                    gameDeal.salePrice.toString() + "€",
+                    color = Color.Green,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
+
+        }
+    }
+}
+
+
+@Composable
+fun WishlistButton(wishlistGame: wishlistGame) {
+    Button(
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
+        onClick = {
+
+        },
+        modifier = Modifier
+            .height(80.dp)
+            .fillMaxWidth()
+            .padding(bottom = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = null,
+                alignment = Alignment.CenterStart
+            )
+
+            Spacer(modifier = Modifier.padding(end = 25.dp))
 
             Text(
-                gameDeal.salePrice+" €",
+                wishlistGame.title,
                 color = Color.White,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
+
+            Spacer(modifier = Modifier.padding(end = 70.dp))
+            if (wishlistGame.salePrice<wishlistGame.lastPrice){
+                Text(
+                    wishlistGame.salePrice.toString() + "€",
+                    color = Color.Green,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }else{
+                Text(
+                    wishlistGame.salePrice.toString() + "€",
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
+
         }
     }
 }
