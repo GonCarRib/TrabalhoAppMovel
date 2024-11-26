@@ -3,9 +3,8 @@ package com.example.sheep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+
 data class GameDeal(
-    @PrimaryKey(autoGenerate = false)
     val dealID: Int,
     val internalName: String,
     val title: String,
