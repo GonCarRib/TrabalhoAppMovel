@@ -138,20 +138,12 @@ fun GameDealButton(gameDeal: GameDeal) {
             )
 
             Spacer(modifier = Modifier.padding(end = 70.dp))
-            if (gameDeal.salePrice<10f){
-                Text(
-                    gameDeal.salePrice.toString() + "€",
-                    color = Color.Red,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }else{
-                Text(
-                    gameDeal.salePrice.toString() + "€",
-                    color = Color.Green,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }
 
+            Text(
+                gameDeal.salePrice.toString() + "€",
+                color = Color.White,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
         }
     }
 }

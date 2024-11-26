@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.retrofit)
     implementation (libs.gson)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,7 +63,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.42")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
+    implementation ("androidx.compose.material:material:1.4.2")
     implementation ("androidx.room:room-runtime:2.4.3")
     implementation ("androidx.fragment:fragment-ktx:1.5.5")
     kapt ("androidx.room:room-compiler:2.4.3")
