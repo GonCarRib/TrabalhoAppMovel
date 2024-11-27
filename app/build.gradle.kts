@@ -64,9 +64,21 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.42")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation ("androidx.compose.material:material:1.4.2")
-    implementation ("androidx.room:room-runtime:2.4.3")
     implementation ("androidx.fragment:fragment-ktx:1.5.5")
-    kapt ("androidx.room:room-compiler:2.4.3")
+
+
+    val nav_version = "2.8.2"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    val compose_material_version = "1.7.3"
+    implementation("androidx.compose.material:material:$compose_material_version")
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation ("androidx.room:room-runtime:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+    kapt ("androidx.room:room-compiler:$room_version")
+
+
 
 
 }

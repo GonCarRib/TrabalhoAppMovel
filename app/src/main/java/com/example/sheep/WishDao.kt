@@ -7,13 +7,13 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface DealDao {
+interface WishDao {
     @Insert
-    fun insertDeal(deal: GameDeal)
+    fun insertWish(wish: wishlistGame)
 
     @Delete
-    fun deleteDeal(deal: GameDeal)
+    fun deleteWish(wish: wishlistGame)
 
-   @Query("SELECT * FROM GameDeal ORDER BY dealID ASC")
-    fun getDealsById(): Flow<List<GameDeal>>
+   @Query("SELECT * FROM wishlistGame ")
+    fun getWishs(): Flow<List<GameDeal>>
 }
