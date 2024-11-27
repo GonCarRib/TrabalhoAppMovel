@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WishDao {
+
     @Insert
     fun insertWish(wish: wishlistGame)
 

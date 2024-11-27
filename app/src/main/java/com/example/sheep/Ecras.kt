@@ -26,7 +26,10 @@ import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
 
 @Composable
-fun EcraHome() {
+fun EcraHome(
+    state: WishlistState,
+    onEvent: (WishEvent) -> Unit,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,14 +39,20 @@ fun EcraHome() {
             .padding(10.dp)
     ) {
         items(gameDeals) { gameDeal ->
-            GameDealButton(gameDeal)
+            GameDealButton(
+                onEvent,
+                gameDeal
+            )
         }
     }
     InfoDeal()
 }
 
 @Composable
-fun EcraWishlist() {
+fun EcraWishlist(
+    state: WishlistState,
+    onEvent: (WishEvent) -> Unit,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,7 +61,7 @@ fun EcraWishlist() {
             .padding(top = 65.dp)
             .padding(10.dp)
     ) {
-        items(wishlistDeals) { wishlistGame ->
+        items(state.wishlist) { wishlistGame ->
             WishlistButton(wishlistGame)
         }
     }
@@ -109,11 +118,34 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal) {
+fun GameDealButton(
+    onEvent: (WishEvent) -> Unit,
+    gameDeal: GameDeal
+) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
-
+            onEvent(WishEvent.SetDealID(gameDeal.dealID))
+            onEvent(WishEvent.SetDealID(gameDeal.dealID))
+            onEvent(WishEvent.SetInternalName(gameDeal.internalName))
+            onEvent(WishEvent.SetTitle(gameDeal.title))
+            onEvent(WishEvent.SetMetacriticLink(gameDeal.metacriticLink))
+            onEvent(WishEvent.SetStoreID(gameDeal.storeID))
+            onEvent(WishEvent.SetGameID(gameDeal.gameID))
+            onEvent(WishEvent.SetSalePrice(gameDeal.salePrice))
+            onEvent(WishEvent.SetNormalPrice(gameDeal.normalPrice))
+            onEvent(WishEvent.SetIsOnSale(gameDeal.isOnSale))
+            onEvent(WishEvent.SetSavings(gameDeal.savings))
+            onEvent(WishEvent.SetMetacriticScore(gameDeal.metacriticScore))
+            onEvent(WishEvent.SetSteamRatingText(gameDeal.steamRatingText))
+            onEvent(WishEvent.SetSteamRatingPercent(gameDeal.steamRatingPercent))
+            onEvent(WishEvent.SetSteamRatingCount(gameDeal.steamRatingCount))
+            onEvent(WishEvent.SetSteamAppID(gameDeal.steamAppID))
+            onEvent(WishEvent.SetReleaseDate(gameDeal.releaseDate))
+            onEvent(WishEvent.SetLastChange(gameDeal.lastChange))
+            onEvent(WishEvent.SetDealRating(gameDeal.dealRating))
+            onEvent(WishEvent.SetThumb(gameDeal.thumb))
+            onEvent(WishEvent.SaveWish)
         },
         modifier = Modifier
             .height(80.dp)

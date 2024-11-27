@@ -1,44 +1,42 @@
 package com.example.sheep
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class WishlistViewModel(
     private val dao: WishDao
 ) : ViewModel() {
 
+
     private val _state = MutableStateFlow(WishlistState())
+    val state : MutableStateFlow<WishlistState> = _state
     private val _wishs = dao.getWishs()
 
 
     fun onEvent(event: WishEvent){
-        when(event){
-            WishEvent.SaveWish ->{
-                val dealID = _state.value.dealID
-                val internalName = _state.value.internalName
-                val title = _state.value.title
-                val metacriticLink = _state.value.metacriticLink
-                val storeID = _state.value.storeID
-                val gameID = _state.value.gameID
-                var lastPrice = _state.value.lastPrice
-                val salePrice = _state.value.salePrice
-                val normalPrice = _state.value.normalPrice
-                val isOnSale = _state.value.isOnSale
-                val savings = _state.value.savings
-                val metacriticScore = _state.value.metacriticScore
-                val steamRatingText = _state.value.steamRatingText
-                val steamRatingPercent = _state.value.steamRatingPercent
-                val steamRatingCount = _state.value.steamRatingCount
-                val steamAppID = _state.value.steamAppID
-                val releaseDate = _state.value.releaseDate
-                val lastChange = _state.value.lastChange
-                val dealRating = _state.value.dealRating
-                val thumb = _state.value.thumb
+        when(event) {
+            WishEvent.SaveWish -> {
+                val dealID = state.value.dealID
+                val internalName = state.value.internalName
+                val title = state.value.title
+                val metacriticLink = state.value.metacriticLink
+                val storeID = state.value.storeID
+                val gameID = state.value.gameID
+                val lastPrice = state.value.lastPrice
+                val salePrice = state.value.salePrice
+                val normalPrice = state.value.normalPrice
+                val isOnSale = state.value.isOnSale
+                val savings = state.value.savings
+                val metacriticScore = state.value.metacriticScore
+                val steamRatingText = state.value.steamRatingText
+                val steamRatingPercent = state.value.steamRatingPercent
+                val steamRatingCount = state.value.steamRatingCount
+                val steamAppID = state.value.steamAppID
+                val releaseDate = state.value.releaseDate
+                val lastChange = state.value.lastChange
+                val dealRating = state.value.dealRating
+                val thumb = state.value.thumb
 
                 val wish = wishlistGame(
                     dealID = dealID,
@@ -62,6 +60,7 @@ class WishlistViewModel(
                     dealRating = dealRating,
                     thumb = thumb
                 )
+
                 dao.insertWish(wish)
                 _state.update {it.copy(
                     dealID = 0,

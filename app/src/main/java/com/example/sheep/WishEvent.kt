@@ -1,7 +1,7 @@
 package com.example.sheep
 
 sealed interface WishEvent {
-    object SaveWish : WishEvent
+    data object SaveWish : WishEvent
 
     data class SetDealID(val dealID: Int) : WishEvent
     data class SetInternalName(val internalName: String) : WishEvent
