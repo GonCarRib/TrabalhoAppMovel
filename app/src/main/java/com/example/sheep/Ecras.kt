@@ -24,6 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
@@ -34,7 +38,7 @@ import com.example.sheep.ui.theme.backgroundColor
 
 
 @Composable
-fun EcraHome(modifier: Modifier = Modifier, allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
+fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,14 +48,18 @@ fun EcraHome(modifier: Modifier = Modifier, allWishlists: List<WishlistGame>, se
             .padding(10.dp)
     ) {
         items(gameDeals) { gameDeal ->
-            GameDealButton(gameDeal)
+            GameDealButton(
+                gameDeal,
+                modifier = modifier,
+                viewModel = viewModel
+            )
         }
     }
     InfoDeal()
 }
 
 @Composable
-fun EcraWishlist() {
+fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>,) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,9 +68,9 @@ fun EcraWishlist() {
             .padding(top = 65.dp)
             .padding(10.dp)
     ) {
-        /*items(WishlistDeals) { wishlistGame ->
+        items(allWishlists) { wishlistGame ->
             WishlistButton(wishlistGame)
-        }*/
+        }
     }
     InfoDeal()
 }
@@ -117,11 +125,34 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal) {
+fun GameDealButton(gameDeal: GameDeal,modifier: Modifier = Modifier, viewModel: MainViewModel) {
+
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
-
+            viewModel.insertWishlist(WishlistGame(
+                gameDeal.dealID,
+                gameDeal.title ,
+                gameDeal.metacriticLink ,
+                gameDeal.internalName,
+                gameDeal.storeID ,
+                gameDeal.gameID ,
+                lastPrice = 20f , //LastPrice meter depois
+                gameDeal.salePrice ,
+                gameDeal.normalPrice ,
+                gameDeal.OnSale  ,
+                gameDeal.savings ,
+                gameDeal.metacriticScore ,
+                gameDeal.steamRatingText ,
+                gameDeal.steamRatingPercent ,
+                gameDeal.steamRatingCount ,
+                gameDeal.steamAppID ,
+                gameDeal.releaseDate ,
+                gameDeal.lastChange ,
+                gameDeal.dealRating ,
+                gameDeal.thumb
+            )
+        )
         },
         modifier = Modifier
             .height(80.dp)
