@@ -52,9 +52,9 @@ fun EcraWishlist() {
             .padding(top = 65.dp)
             .padding(10.dp)
     ) {
-        items(wishlistDeals) { wishlistGame ->
+        /*items(WishlistDeals) { wishlistGame ->
             WishlistButton(wishlistGame)
-        }
+        }*/
     }
     InfoDeal()
 }
@@ -150,7 +150,7 @@ fun GameDealButton(gameDeal: GameDeal) {
 
 
 @Composable
-fun WishlistButton(wishlistGame: wishlistGame) {
+fun WishlistButton(wishlistGame: WishlistGame) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
