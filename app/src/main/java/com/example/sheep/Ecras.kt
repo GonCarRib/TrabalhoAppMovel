@@ -2,6 +2,7 @@ package com.example.sheep
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,11 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.navigation.compose.rememberNavController
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
 
+
+
+
+
+
 @Composable
-fun EcraHome() {
+fun EcraHome(modifier: Modifier = Modifier, allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()

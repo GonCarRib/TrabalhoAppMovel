@@ -1,5 +1,6 @@
 package com.example.sheep
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,14 +19,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,39 +46,78 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             SheepTheme{
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    ProgramaPrincipal()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    val owner = LocalViewModelStoreOwner.current
+
+                    owner?.let {
+                        val viewModel: MainViewModel = viewModel(
+                            it,
+                            "MainViewModel",
+                            MainViewModelFactory(
+                                LocalContext.current.applicationContext
+                                        as Application
+                            )
+                        )
+
+                        ScreenSetup(
+                            modifier = Modifier.padding(innerPadding),
+                            viewModel = viewModel
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+
+
 @Composable
-fun ProgramaPrincipal() {
+fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+
     val navController = rememberNavController()
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController, appItems = Destino.toList) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
-                AppNavigation(navController = navController)
+                AppNavigation(
+                    navController = navController,
+                    modifier = modifier,
+                    viewModel = viewModel
+                    )
             }
         }
     )
 }
 
+
+class MainViewModelFactory(val application: Application) :
+    ViewModelProvider.Factory {
+    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+        return MainViewModel(application) as T
+    }
+}
+
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, viewModel: MainViewModel) {
+    val allWishlists by viewModel.allWishlists.observeAsState(listOf())
+    val searchResults by viewModel.searchResults.observeAsState(listOf())
     NavHost(navController, startDestination = Destino.EcraHome.route) {
         composable(Destino.EcraHome.route) {
-            EcraHome()
+            EcraHome(
+                modifier = modifier,
+                allWishlists = allWishlists,
+                searchResults = searchResults,
+                viewModel = viewModel
+            )
         }
         composable(Destino.EcraWishlist.route) {
             EcraWishlist()
         }
-        composable(Destino.EcraGame.route) {
+        /*composable(Destino.EcraGame.route) {
             EcraHome()
-        }
+        }*/
     }
 }
 
