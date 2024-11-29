@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 class WishlistGame {
     @PrimaryKey(autoGenerate = false)
     var dealID: Int = 0
-
     var internalName: String = ""
     var title: String = ""
     var metacriticLink: String = ""
