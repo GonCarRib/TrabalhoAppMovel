@@ -50,7 +50,6 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
         items(gameDeals) { gameDeal ->
             GameDealButton(
                 gameDeal,
-                modifier = modifier,
                 viewModel = viewModel
             )
         }
@@ -59,7 +58,7 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
 }
 
 @Composable
-fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>,) {
+fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +68,10 @@ fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistG
             .padding(10.dp)
     ) {
         items(allWishlists) { wishlistGame ->
-            WishlistButton(wishlistGame)
+            WishlistButton(
+                wishlistGame,
+                viewModel = viewModel
+            )
         }
     }
     InfoDeal()
@@ -115,6 +117,7 @@ fun InfoDeal() {
                 .width(1.dp),
             color = Color.White
         )
+
         Text(
             "Price",
             color = Color.White,
@@ -125,8 +128,7 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal,modifier: Modifier = Modifier, viewModel: MainViewModel) {
-
+fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
@@ -189,11 +191,13 @@ fun GameDealButton(gameDeal: GameDeal,modifier: Modifier = Modifier, viewModel: 
 
 
 @Composable
-fun WishlistButton(wishlistGame: WishlistGame) {
+fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
-
+            viewModel.deleteWishlist(
+                wishlistGame.dealID
+            )
         },
         modifier = Modifier
             .height(80.dp)

@@ -20,7 +20,6 @@ class MainViewModel(application: Application) : ViewModel() {
     fun insertWishlist(wishlist: WishlistGame) {
         repository.insertWishlist(wishlist)
     }
-
     fun deleteWishlist(Id: Int) {
         repository.deleteWishlist(Id)
     }

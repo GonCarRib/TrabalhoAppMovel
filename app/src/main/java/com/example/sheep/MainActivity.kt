@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
                                         as Application
                             )
                         )
-
                         ScreenSetup(
                             modifier = Modifier.padding(innerPadding),
                             viewModel = viewModel
@@ -73,13 +72,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-
 @Composable
 fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
     val navController = rememberNavController()
     Scaffold(
-
         bottomBar = {
             BottomNavigationBar(
                 navController = navController,
@@ -119,7 +115,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(Destino.EcraWishlist.route) {
             EcraWishlist(
                 allWishlists = allWishlists,
-                searchResults = searchResults
+                searchResults = searchResults,
+                viewModel = viewModel
             )
         }
         /*composable(Destino.EcraGame.route) {
@@ -140,7 +137,7 @@ fun BottomNavigationBar(
         modifier = modifier.height(90.dp),
         backgroundColor = MaterialTheme.colorScheme.backgroundBotaoColor,
         contentColor = Color.White
-    ) {
+    ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         appItems.forEach { item ->
