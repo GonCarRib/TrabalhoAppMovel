@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.sheep.ui.theme.SheepTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -39,6 +41,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.unit.dp
+import com.example.sheep.ui.theme.backgroundBotaoColor
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +52,6 @@ class MainActivity : ComponentActivity() {
             SheepTheme{
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val owner = LocalViewModelStoreOwner.current
-
                     owner?.let {
                         val viewModel: MainViewModel = viewModel(
                             it,
@@ -74,11 +77,15 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
-
     val navController = rememberNavController()
-
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, appItems = Destino.toList) },
+
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController,
+                modifier = modifier,
+                appItems = Destino.toList,
+                ) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 AppNavigation(
@@ -92,8 +99,7 @@ fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 }
 
 
-class MainViewModelFactory(val application: Application) :
-    ViewModelProvider.Factory {
+class MainViewModelFactory(val application: Application) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(application) as T
     }
@@ -107,7 +113,6 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(Destino.EcraHome.route) {
             EcraHome(
                 modifier = modifier,
-
                 viewModel = viewModel
             )
         }
@@ -123,22 +128,43 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     }
 }
 
+
+
 @Composable
-fun BottomNavigationBar(navController: NavController, appItems: List<Destino>) {
-    BottomNavigation(backgroundColor = colorResource(id = R.color.purple_700),contentColor = Color.White) {
+fun BottomNavigationBar(
+    navController: NavController,
+    appItems: List<Destino>,
+    modifier: Modifier = Modifier
+) {
+    BottomNavigation(
+        modifier = modifier.height(90.dp),
+        backgroundColor = MaterialTheme.colorScheme.backgroundBotaoColor,
+        contentColor = Color.White
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         appItems.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title, tint=if(currentRoute == item.route) Color.White else Color.White.copy(.2F)) },
-                label = { Text(text = item.title, color = if(currentRoute == item.route) Color.White else Color.White.copy(.2F)) },
-                //selectedContentColor = Color.White, // esta instrução devia funcionar para o efeito (animação), para o ícone e para a cor do texto, mas só funciona para o efeito
-                //unselectedContentColor = Color.White.copy(0.4f), // esta instrução não funciona, por isso resolve-se acima no 'tint' do icon e na 'color' da label
-                alwaysShowLabel = true, // colocar 'false' significa que o texto só aparece debaixo do ícone selecionado (em vez de debaixo de todos)
+                icon = {
+                    Icon(
+                        painterResource(R.drawable.ic_launcher_foreground),
+                        contentDescription = item.title,
+                        tint = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        color = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
+                    )
+                },
+                alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route -> popUpTo(route) { saveState = true } }
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) { saveState = true }
+                        }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -147,6 +173,7 @@ fun BottomNavigationBar(navController: NavController, appItems: List<Destino>) {
         }
     }
 }
+
 
 
 
