@@ -132,12 +132,12 @@ fun GameDealButton(gameDeal: GameDeal,modifier: Modifier = Modifier, viewModel: 
         onClick = {
             viewModel.insertWishlist(WishlistGame(
                 gameDeal.dealID,
+                gameDeal.internalName,
                 gameDeal.title ,
                 gameDeal.metacriticLink ,
-                gameDeal.internalName,
                 gameDeal.storeID ,
                 gameDeal.gameID ,
-                lastPrice = 20f , //LastPrice meter depois
+                20f , //LastPrice meter depois
                 gameDeal.salePrice ,
                 gameDeal.normalPrice ,
                 gameDeal.OnSale  ,

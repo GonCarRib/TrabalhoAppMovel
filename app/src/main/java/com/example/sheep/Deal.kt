@@ -31,7 +31,7 @@ var gameDeals = List(20) { y ->
         internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
         title = "Deus Ex Human Revoluti",
         metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
-        dealID = 2,
+        dealID = 5,
         storeID = "1",
         gameID = "102249",
         salePrice = 2.99f,
@@ -47,12 +47,12 @@ var gameDeals = List(20) { y ->
         lastChange = 1621536418,
         dealRating = "9.6",
         thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    )
+    )/*
     GameDeal(
         internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
         title = "Deus Ex Human Revoluti",
         metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
-        dealID = 2,
+        dealID = 4,
         storeID = "1",
         gameID = "102249",
         salePrice = 20f,
@@ -68,7 +68,7 @@ var gameDeals = List(20) { y ->
         lastChange = 1621536418,
         dealRating = "9.6",
         thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    )
+    )*/
 }
 
 
