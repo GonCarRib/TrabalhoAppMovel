@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
@@ -144,7 +145,8 @@ fun BottomNavigationBar(
             BottomNavigationItem(
                 icon = {
                     Icon(
-                        painterResource(R.drawable.ic_launcher_foreground),
+                        painterResource(R.drawable.baseline_android_24),
+                        modifier = Modifier.size(60.dp).padding(top = 10.dp, bottom = 10.dp),
                         contentDescription = item.title,
                         tint = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
                     )
