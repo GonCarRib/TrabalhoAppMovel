@@ -12,7 +12,7 @@ interface WishlistDao{
     fun insertWishlist(wishlist:WishlistGame)
 
     @Query("DELETE FROM WishlistGame WHERE dealID = :Id")
-    fun deleteProduct(Id: Int)
+    fun deleteWish(Id: Int)
 
     @Query("SELECT * FROM WishlistGame")
     fun getAllWishlist(): LiveData<List<WishlistGame>>

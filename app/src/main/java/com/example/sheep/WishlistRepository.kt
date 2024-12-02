@@ -16,7 +16,7 @@ class WishlistRepository(private val wishlistDao: WishlistDao) {
     }
     fun deleteWishlist(Id: Int) {
         coroutineScope.launch(Dispatchers.IO) {
-            wishlistDao.deleteProduct(Id)
+            wishlistDao.deleteWish(Id)
         }
     }
 
