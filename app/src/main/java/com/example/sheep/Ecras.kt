@@ -2,12 +2,14 @@ package com.example.sheep
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -22,11 +24,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.navigation.compose.rememberNavController
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
 
+
+
+
+
+
 @Composable
-fun EcraHome() {
+fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,14 +50,17 @@ fun EcraHome() {
             .padding(10.dp)
     ) {
         items(gameDeals) { gameDeal ->
-            GameDealButton(gameDeal)
+            GameDealButton(
+                gameDeal,
+                viewModel = viewModel
+            )
         }
     }
     InfoDeal()
 }
 
 @Composable
-fun EcraWishlist() {
+fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,8 +69,11 @@ fun EcraWishlist() {
             .padding(top = 65.dp)
             .padding(10.dp)
     ) {
-        items(wishlistDeals) { wishlistGame ->
-            WishlistButton(wishlistGame)
+        items(allWishlists) { wishlistGame ->
+            WishlistButton(
+                wishlistGame,
+                viewModel = viewModel
+            )
         }
     }
     InfoDeal()
@@ -99,6 +119,7 @@ fun InfoDeal() {
                 .width(1.dp),
             color = Color.White
         )
+
         Text(
             "Price",
             color = Color.White,
@@ -109,11 +130,33 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal) {
+fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
-
+            viewModel.insertWishlist(WishlistGame(
+                gameDeal.dealID,
+                gameDeal.internalName,
+                gameDeal.title ,
+                gameDeal.metacriticLink ,
+                gameDeal.storeID ,
+                gameDeal.gameID ,
+                5f , //LastPrice meter depois
+                gameDeal.salePrice ,
+                gameDeal.normalPrice ,
+                gameDeal.OnSale  ,
+                gameDeal.savings ,
+                gameDeal.metacriticScore ,
+                gameDeal.steamRatingText ,
+                gameDeal.steamRatingPercent ,
+                gameDeal.steamRatingCount ,
+                gameDeal.steamAppID ,
+                gameDeal.releaseDate ,
+                gameDeal.lastChange ,
+                gameDeal.dealRating ,
+                gameDeal.thumb
+            )
+        )
         },
         modifier = Modifier
             .height(80.dp)
@@ -123,10 +166,11 @@ fun GameDealButton(gameDeal: GameDeal) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            Icon(
+                painterResource(R.drawable.baseline_android_24),
+                modifier = Modifier.padding(start = 15.dp, end = 10.dp),
                 contentDescription = null,
-                alignment = Alignment.CenterStart
+                tint =  Color.White
             )
 
             Spacer(modifier = Modifier.padding(end = 25.dp))
@@ -150,11 +194,13 @@ fun GameDealButton(gameDeal: GameDeal) {
 
 
 @Composable
-fun WishlistButton(wishlistGame: wishlistGame) {
+fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
-
+            viewModel.deleteWishlist(
+                wishlistGame.dealID
+            )
         },
         modifier = Modifier
             .height(80.dp)
@@ -164,10 +210,11 @@ fun WishlistButton(wishlistGame: wishlistGame) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            Icon(
+                painterResource(R.drawable.baseline_android_24),
+                modifier = Modifier.padding(start = 15.dp, end = 10.dp),
                 contentDescription = null,
-                alignment = Alignment.CenterStart
+                tint =  Color.White
             )
 
             Spacer(modifier = Modifier.padding(end = 25.dp))
