@@ -141,7 +141,7 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
                 gameDeal.metacriticLink ,
                 gameDeal.storeID ,
                 gameDeal.gameID ,
-                20f , //LastPrice meter depois
+                5f , //LastPrice meter depois
                 gameDeal.salePrice ,
                 gameDeal.normalPrice ,
                 gameDeal.OnSale  ,
