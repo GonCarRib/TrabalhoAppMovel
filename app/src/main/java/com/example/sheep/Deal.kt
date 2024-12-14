@@ -1,31 +1,68 @@
 package com.example.sheep
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 data class GameDeal(
-    val dealID: Int,
+
+    @SerializedName("internalName")
     val internalName: String,
+
+    @SerializedName("title")
     val title: String,
+
+    @SerializedName("metacriticLink")
     val metacriticLink: String,
+
+    @SerializedName("dealID")
+    val dealID: String,
+
+    @SerializedName("storeID")
     val storeID: String,
+
+    @SerializedName("gameID")
     val gameID: String,
-    val salePrice: Float,
+
+    @SerializedName("salePrice")
+    val salePrice: String,
+
+    @SerializedName("normalPrice")
     val normalPrice: String,
+
+    @SerializedName("OnSale")
     val OnSale: String,
+
+    @SerializedName("savings")
     val savings: String,
+
+    @SerializedName("metacriticScore")
     val metacriticScore: String,
+
+    @SerializedName("steamRatingText")
     val steamRatingText: String,
+
+    @SerializedName("steamRatingPercent")
     val steamRatingPercent: String,
+
+    @SerializedName("steamRatingCount")
     val steamRatingCount: String,
+
+    @SerializedName("steamAppID")
     val steamAppID: String,
+
+    @SerializedName("releaseDate")
     val releaseDate: Long,
+
+    @SerializedName("lastChange")
     val lastChange: Long,
+
+    @SerializedName("dealRating")
     val dealRating: String,
+    
+    @SerializedName("thumb")
     val thumb: String
 )
 
-
+/*
 var gameDeals = List(20) { y ->
     GameDeal(
         internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
@@ -47,7 +84,7 @@ var gameDeals = List(20) { y ->
         lastChange = 1621536418,
         dealRating = "9.6",
         thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    )/*
+    )
     GameDeal(
         internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
         title = "Deus Ex Human Revoluti",
@@ -68,7 +105,7 @@ var gameDeals = List(20) { y ->
         lastChange = 1621536418,
         dealRating = "9.6",
         thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    )*/
-}
+    )
+}*/
 
 

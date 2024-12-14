@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "WishlistGame")
 class WishlistGame {
     @PrimaryKey(autoGenerate = false)
-    var dealID: Int = 0
+    var dealID: String = ""
     var internalName: String = ""
     var title: String = ""
     var metacriticLink: String = ""
     var storeID: String = ""
     var gameID: String = ""
     var lastPrice: Float = 0.0f
-    var salePrice: Float = 0.0f
+    var salePrice: String = ""
     var normalPrice: String = ""
     var OnSale: String = ""
     var savings: String = ""
@@ -29,14 +29,14 @@ class WishlistGame {
     var thumb: String = ""
 
     constructor() : this(
-        0,
+        "",
         "",
         "",
         "",
         "",
         "",
         0.0f,
-        0.0f,
+        "",
         "",
         "",
         "",
@@ -51,14 +51,14 @@ class WishlistGame {
         ""
     )
     constructor(
-        dealID: Int,
+        dealID: String,
         internalName: String,
         title: String,
         metacriticLink: String,
         storeID: String,
-        gameID: String ,
+        gameID: String,
         lastPrice: Float,
-        salePrice: Float,
+        salePrice: String,
         normalPrice: String,
         OnSale: String,
         savings: String,
@@ -80,7 +80,7 @@ class WishlistGame {
         this.storeID = storeID
         this.gameID = gameID
         this.lastPrice = lastPrice
-        this.salePrice = salePrice
+        this.salePrice = salePrice.toString()
         this.normalPrice = normalPrice
         this.OnSale = OnSale
         this.savings = savings
@@ -97,51 +97,3 @@ class WishlistGame {
 }
 
 
-
-/*
-var WishlistDeals = listOf(
-    WishlistGame(
-        internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
-        title = "Deus Ex Human Revoluti",
-        metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
-        dealID = 2,
-        storeID = "1",
-        gameID = "102249",
-        lastPrice = 10f,
-        salePrice = 20f,
-        normalPrice = "19.99",
-        OnSale = "1",
-        savings = "85.042521",
-        metacriticScore = "91",
-        steamRatingText = "Very Positive",
-        steamRatingPercent = "92",
-        steamRatingCount = "17993",
-        steamAppID = "238010",
-        releaseDate = 1382400000,
-        lastChange = 1621536418,
-        dealRating = "9.6",
-        thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    ),
-    WishlistGame(
-        internalName = "DEUSEXHUMANREVOLUTIONDIRECTORSCUT",
-        title = "Deus Ex Human Revoluti",
-        metacriticLink = "/game/pc/deus-ex-human-revolution---directors-cut",
-        dealID = 2,
-        storeID = "1",
-        gameID = "102249",
-        lastPrice = 10f,
-        salePrice = 2.99f,
-        normalPrice = "19.99",
-        OnSale = "1",
-        savings = "85.042521",
-        metacriticScore = "91",
-        steamRatingText = "Very Positive",
-        steamRatingPercent = "92",
-        steamRatingCount = "17993",
-        steamAppID = "238010",
-        releaseDate = 1382400000,
-        lastChange = 1621536418,
-        dealRating = "9.6",
-        thumb = "https://cdn.cloudflare.steamstatic.com/steam/apps/238010/capsule_sm_120.jpg?t=1619788192"
-    )
-)*/
