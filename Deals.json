@@ -1,22 +1,6 @@
-
-    {
-        "internalName": "NEEDFORSPEEDUNBOUND",
-        "title": "Need for Speed Unbound",
-        "metacriticLink": "/game/need-for-speed-unbound/",
-        "dealID": "4rbRh50lHEieBs4NgiZoBdtoZEcFdbynQfpcRZNhOmQ%3D",
-        "storeID": "8",
-        "gameID": "251767",
-        "salePrice": "4.89",
-        "normalPrice": "69.99",
-        "isOnSale": "1",
-        "savings": "93.013288",
-        "metacriticScore": "73",
-        "steamRatingText": "Mixed",
-        "steamRatingPercent": "61",
-        "steamRatingCount": "31543",
-        "steamAppID": "1846380",
-        "releaseDate": 1669939200,
-        "lastChange": 1732125448,
-        "dealRating": "10.0",
-        "thumb": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1846380/capsule_sm_120.jpg?t=1730217007"
-    }
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
