@@ -6,11 +6,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "WishlistGame")
 class WishlistGame {
-    @PrimaryKey(autoGenerate = false)
-    var dealID: String = ""
+    @PrimaryKey(autoGenerate = true)
+    var id : Int = 0;
     var internalName: String = ""
     var title: String = ""
     var metacriticLink: String = ""
+    var dealID: String = ""
     var storeID: String = ""
     var gameID: String = ""
     var lastPrice: Float = 0.0f
@@ -51,10 +52,11 @@ class WishlistGame {
         ""
     )
     constructor(
-        dealID: String,
+
         internalName: String,
         title: String,
         metacriticLink: String,
+        dealID: String,
         storeID: String,
         gameID: String,
         lastPrice: Float,
@@ -80,7 +82,7 @@ class WishlistGame {
         this.storeID = storeID
         this.gameID = gameID
         this.lastPrice = lastPrice
-        this.salePrice = salePrice.toString()
+        this.salePrice = salePrice
         this.normalPrice = normalPrice
         this.OnSale = OnSale
         this.savings = savings

@@ -122,20 +122,25 @@ fun InfoDeal() {
 
 @Composable
 fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
+
+
+
     Button(
+
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
             viewModel.insertWishlist(WishlistGame(
-                gameDeal.dealID,
                 gameDeal.internalName,
                 gameDeal.title ,
                 gameDeal.metacriticLink ,
+                gameDeal.dealID ,
                 gameDeal.storeID ,
                 gameDeal.gameID ,
                 5f , //LastPrice meter depois
-                gameDeal.salePrice.toString() ,
+                gameDeal.salePrice,
                 gameDeal.normalPrice ,
-                gameDeal.OnSale  ,
+                //gameDeal.OnSale  ,
+                "1",
                 gameDeal.savings ,
                 gameDeal.metacriticScore ,
                 gameDeal.steamRatingText ,
@@ -146,6 +151,29 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
                 gameDeal.lastChange ,
                 gameDeal.dealRating ,
                 gameDeal.thumb
+
+                 /*
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0f,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                "",
+                ""*/
+
             )
         )
         },
