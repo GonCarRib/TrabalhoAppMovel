@@ -1,16 +1,16 @@
 package com.example.sheep
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.sheep.ui.theme.SheepTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,15 +34,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import com.example.sheep.ui.theme.backgroundBotaoColor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +49,7 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             SheepTheme{
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val owner = LocalViewModelStoreOwner.current
                     owner?.let {
@@ -71,6 +70,27 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+fun getData(deals: MutableList<GameDeal>, context: Context) {
+    val retrofitClient = NetworkUtils
+        .getRetrofitInstance("https://www.cheapshark.com/")
+
+    val endpoint = retrofitClient.create(Endpoint::class.java)
+    val callback = endpoint.getDeals()
+
+    callback.enqueue(object : Callback<List<GameDeal>> {
+        override fun onFailure(call: Call<List<GameDeal>>, t: Throwable) {
+            Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onResponse(call: Call<List<GameDeal>>, response: Response<List<GameDeal>>) {
+            response.body()?.let { dealList ->
+                deals.clear()
+                deals.addAll(dealList.map {it})
+            }
+        }
+    })
 }
 
 @Composable
@@ -106,11 +126,15 @@ class MainViewModelFactory(val application: Application) : ViewModelProvider.Fac
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, viewModel: MainViewModel) {
     val allWishlists by viewModel.allWishlists.observeAsState(listOf())
     val searchResults by viewModel.searchResults.observeAsState(listOf())
+    val deals = remember { mutableStateListOf<GameDeal>() }
+    val context = LocalContext.current
+    getData(deals, context)
     NavHost(navController, startDestination = Destino.EcraHome.route) {
         composable(Destino.EcraHome.route) {
             EcraHome(
                 modifier = modifier,
-                viewModel = viewModel
+                viewModel = viewModel,
+                gameDeals = deals
             )
         }
         composable(Destino.EcraWishlist.route) {

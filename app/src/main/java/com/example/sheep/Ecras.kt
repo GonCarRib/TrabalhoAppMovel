@@ -1,15 +1,12 @@
 package com.example.sheep
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -25,22 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.navigation.compose.rememberNavController
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
 
 
 
-
-
-
 @Composable
-fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
+fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,6 +46,9 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel) {
     }
     InfoDeal()
 }
+
+
+
 
 @Composable
 fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
@@ -131,20 +122,25 @@ fun InfoDeal() {
 
 @Composable
 fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
+
+
+
     Button(
+
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
             viewModel.insertWishlist(WishlistGame(
-                gameDeal.dealID,
                 gameDeal.internalName,
                 gameDeal.title ,
                 gameDeal.metacriticLink ,
+                gameDeal.dealID ,
                 gameDeal.storeID ,
                 gameDeal.gameID ,
                 5f , //LastPrice meter depois
-                gameDeal.salePrice ,
+                gameDeal.salePrice,
                 gameDeal.normalPrice ,
-                gameDeal.OnSale  ,
+                //gameDeal.OnSale  ,
+                "1",
                 gameDeal.savings ,
                 gameDeal.metacriticScore ,
                 gameDeal.steamRatingText ,
@@ -155,6 +151,29 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
                 gameDeal.lastChange ,
                 gameDeal.dealRating ,
                 gameDeal.thumb
+
+                 /*
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0f,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                "",
+                ""*/
+
             )
         )
         },
@@ -226,7 +245,7 @@ fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
             )
 
             Spacer(modifier = Modifier.padding(end = 70.dp))
-            if (wishlistGame.salePrice<wishlistGame.lastPrice){
+            if (wishlistGame.salePrice.toFloat()<wishlistGame.lastPrice){
                 Text(
                     wishlistGame.salePrice.toString() + "€",
                     color = Color.Green,

@@ -14,7 +14,7 @@ class WishlistRepository(private val wishlistDao: WishlistDao) {
             wishlistDao.insertWishlist(newwishlist)
         }
     }
-    fun deleteWishlist(Id: Int) {
+    fun deleteWishlist(Id: String) {
         coroutineScope.launch(Dispatchers.IO) {
             wishlistDao.deleteWish(Id)
         }
