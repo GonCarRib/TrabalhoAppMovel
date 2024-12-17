@@ -9,6 +9,7 @@ class MainViewModel(application: Application) : ViewModel() {
     val allWishlists: LiveData<List<WishlistGame>>
     private val repository: WishlistRepository
     val searchResults: MutableLiveData<List<WishlistGame>>
+
     init {
         val wishlistDb = WishlistRoomDatabase.getInstance(application)
         val wishlistDao = wishlistDb.wishlistDao()

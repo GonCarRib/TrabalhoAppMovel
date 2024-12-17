@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-fun getData(deals: MutableList<GameDeal>, context: Context) {
+fun getDataGames(deals: MutableList<GameDeal>, context: Context) {
     val retrofitClient = NetworkUtils
         .getRetrofitInstance("https://www.cheapshark.com/")
 
@@ -88,6 +88,27 @@ fun getData(deals: MutableList<GameDeal>, context: Context) {
             response.body()?.let { dealList ->
                 deals.clear()
                 deals.addAll(dealList.map {it})
+            }
+        }
+    })
+}
+
+fun getDataStore(stores: MutableList<Store>, context: Context) {
+    val retrofitClient = NetworkUtils
+        .getRetrofitInstance("https://www.cheapshark.com/")
+
+    val endpoint = retrofitClient.create(Endpoint::class.java)
+    val callback = endpoint.getStores()
+
+    callback.enqueue(object : Callback<List<Store>> {
+        override fun onFailure(call: Call<List<Store>>, t: Throwable) {
+            Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onResponse(call: Call<List<Store>>, response: Response<List<Store>>) {
+            response.body()?.let { storeList ->
+                stores.clear()
+                stores.addAll(storeList.map {it})
             }
         }
     })
@@ -127,14 +148,18 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     val allWishlists by viewModel.allWishlists.observeAsState(listOf())
     val searchResults by viewModel.searchResults.observeAsState(listOf())
     val deals = remember { mutableStateListOf<GameDeal>() }
+    val stores = remember { mutableStateListOf<Store>() }
     val context = LocalContext.current
-    getData(deals, context)
+    getDataGames(deals, context)
+    getDataStore(stores,context)
+
     NavHost(navController, startDestination = Destino.EcraHome.route) {
         composable(Destino.EcraHome.route) {
             EcraHome(
                 modifier = modifier,
                 viewModel = viewModel,
-                gameDeals = deals
+                gameDeals = deals,
+                Stores = stores
             )
         }
         composable(Destino.EcraWishlist.route) {

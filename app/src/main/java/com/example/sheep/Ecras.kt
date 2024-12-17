@@ -1,5 +1,7 @@
 package com.example.sheep
 
+
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -22,13 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import coil3.compose.AsyncImage
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
 
 
 
 @Composable
-fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>) {
+fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>,Stores : List<Store>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +44,8 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals
         items(gameDeals) { gameDeal ->
             GameDealButton(
                 gameDeal,
-                viewModel = viewModel
+                viewModel = viewModel,
+                Stores = Stores
             )
         }
     }
@@ -121,12 +126,9 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
-
-
+fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<Store>) {
 
     Button(
-
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
             viewModel.insertWishlist(WishlistGame(
@@ -185,14 +187,25 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(
-                painterResource(R.drawable.baseline_android_24),
+
+
+            /*Icon(
+                painterResource(R.drawable.ic_launcher_background),
                 modifier = Modifier.padding(start = 15.dp, end = 10.dp),
                 contentDescription = null,
                 tint =  Color.White
-            )
+            )*/
+            val store = Stores.find { it.storeID == gameDeal.storeID}
 
-            Spacer(modifier = Modifier.padding(end = 25.dp))
+                AsyncImage(
+                    model =  "https://www.cheapshark.com/" + store!!.images.logo ,
+                    contentDescription = null,
+                    modifier = Modifier.size(40.dp).padding(top = 10.dp, start = 10.dp)
+                )
+
+
+
+            Spacer(modifier = Modifier.padding(end = 35.dp))
 
             Text(
                 gameDeal.title,
