@@ -166,7 +166,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             EcraWishlist(
                 allWishlists = allWishlists,
                 searchResults = searchResults,
-                viewModel = viewModel
+                viewModel = viewModel,
+                Stores = stores
             )
         }
         /*composable(Destino.EcraGame.route) {

@@ -56,7 +56,7 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals
 
 
 @Composable
-fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel) {
+fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel,Stores : List<Store>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +68,8 @@ fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistG
         items(allWishlists) { wishlistGame ->
             WishlistButton(
                 wishlistGame,
-                viewModel = viewModel
+                viewModel = viewModel,
+                Stores = Stores
             )
         }
     }
@@ -154,7 +155,7 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
                 gameDeal.dealRating ,
                 gameDeal.thumb
 
-                 /*
+            /*
                 "",
                 "",
                 "",
@@ -174,7 +175,8 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
                 0,
                 0,
                 "",
-                ""*/
+                ""
+            */
 
             )
         )
@@ -210,7 +212,7 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
             Text(
                 gameDeal.title,
                 color = Color.White,
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically).weight(35f)
             )
 
             Spacer(modifier = Modifier.padding(end = 70.dp))
@@ -218,7 +220,7 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
             Text(
                 gameDeal.salePrice.toString() + "€",
                 color = Color.White,
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
             )
         }
     }
@@ -226,7 +228,7 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
 
 
 @Composable
-fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
+fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel,Stores : List<Store>) {
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
@@ -242,11 +244,19 @@ fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(
+            /*Icon(
                 painterResource(R.drawable.baseline_android_24),
                 modifier = Modifier.padding(start = 15.dp, end = 10.dp),
                 contentDescription = null,
                 tint =  Color.White
+            )*/
+
+            val store = Stores.find { it.storeID == wishlistGame.storeID}
+
+            AsyncImage(
+                model =  "https://www.cheapshark.com/" + store!!.images.logo ,
+                contentDescription = null,
+                modifier = Modifier.size(40.dp).padding(top = 10.dp, start = 10.dp)
             )
 
             Spacer(modifier = Modifier.padding(end = 25.dp))
@@ -254,21 +264,23 @@ fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel) {
             Text(
                 wishlistGame.title,
                 color = Color.White,
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically).weight(35f)
             )
 
             Spacer(modifier = Modifier.padding(end = 70.dp))
+
+
             if (wishlistGame.salePrice.toFloat()<wishlistGame.lastPrice){
                 Text(
-                    wishlistGame.salePrice.toString() + "€",
+                    wishlistGame.salePrice + "€",
                     color = Color.Green,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
                 )
             }else{
                 Text(
-                    wishlistGame.salePrice.toString() + "€",
+                    wishlistGame.salePrice + "€",
                     color = Color.Red,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
                 )
             }
 
