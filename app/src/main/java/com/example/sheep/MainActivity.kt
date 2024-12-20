@@ -159,7 +159,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 modifier = modifier,
                 viewModel = viewModel,
                 gameDeals = deals,
-                Stores = stores
+                Stores = stores,
+                navController
             )
         }
         composable(Destino.EcraWishlist.route) {

@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
@@ -32,7 +33,7 @@ import com.example.sheep.ui.theme.backgroundColor
 
 
 @Composable
-fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>,Stores : List<Store>) {
+fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>,Stores : List<Store>,navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,7 +46,9 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals
             GameDealButton(
                 gameDeal,
                 viewModel = viewModel,
-                Stores = Stores
+                Stores = Stores,
+                navController
+
             )
         }
     }
@@ -127,11 +130,12 @@ fun InfoDeal() {
 }
 
 @Composable
-fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<Store>) {
+fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<Store>,navController: NavHostController) {
 
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
         onClick = {
+            //navController.navigate(Destino.EcraWishlist.route)
             viewModel.insertWishlist(WishlistGame(
                 gameDeal.internalName,
                 gameDeal.title ,
