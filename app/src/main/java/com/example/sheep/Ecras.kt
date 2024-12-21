@@ -1,8 +1,10 @@
 package com.example.sheep
 
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,15 +23,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.sheep.ui.theme.backgroundBotaoColor
 import com.example.sheep.ui.theme.backgroundColor
-
+import com.google.gson.Gson
+import java.net.URLEncoder
 
 
 @Composable
@@ -56,8 +57,6 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals
 }
 
 
-
-
 @Composable
 fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistGame>, viewModel: MainViewModel,Stores : List<Store>) {
     LazyColumn(
@@ -79,6 +78,23 @@ fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistG
     InfoDeal()
 }
 
+
+@Composable
+fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHostController) {
+    val gameDeal = viewModel.selectedGameDeal
+
+    Box(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.backgroundColor)
+
+    ) {
+        if (gameDeal != null) {
+
+            Text(gameDeal.gameID, color = Color.White)
+        }
+        Button(onClick = { navController.navigate(Destino.EcraHome.route)}) { Text("fataaaa") }
+    }
+}
 
 @Composable
 fun InfoDeal() {
@@ -129,78 +145,57 @@ fun InfoDeal() {
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<Store>,navController: NavHostController) {
-
     Button(
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.backgroundBotaoColor),
-        onClick = {
-            //navController.navigate(Destino.EcraWishlist.route)
-            viewModel.insertWishlist(WishlistGame(
-                gameDeal.internalName,
-                gameDeal.title ,
-                gameDeal.metacriticLink ,
-                gameDeal.dealID ,
-                gameDeal.storeID ,
-                gameDeal.gameID ,
-                5f , //LastPrice meter depois
-                gameDeal.salePrice,
-                gameDeal.normalPrice ,
-                //gameDeal.OnSale  ,
-                "1",
-                gameDeal.savings ,
-                gameDeal.metacriticScore ,
-                gameDeal.steamRatingText ,
-                gameDeal.steamRatingPercent ,
-                gameDeal.steamRatingCount ,
-                gameDeal.steamAppID ,
-                gameDeal.releaseDate ,
-                gameDeal.lastChange ,
-                gameDeal.dealRating ,
-                gameDeal.thumb
-
-            /*
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                0f,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                0,
-                0,
-                "",
-                ""
-            */
-
-            )
-        )
-        },
+        onClick = {},
         modifier = Modifier
             .height(80.dp)
             .fillMaxWidth()
             .padding(bottom = 10.dp)
+
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .combinedClickable(
+                    onClick = {
+                        viewModel.selectedGameDeal = gameDeal
+                        navController.navigate(Destino.EcraGame.route)
+                    },
+
+                    onLongClick = {
+                        viewModel.insertWishlist(WishlistGame(
+                            gameDeal.internalName,
+                            gameDeal.title ,
+                            gameDeal.metacriticLink ,
+                            gameDeal.dealID ,
+                            gameDeal.storeID ,
+                            gameDeal.gameID ,
+                            5f , //LastPrice meter depois
+                            gameDeal.salePrice,
+                            gameDeal.normalPrice ,
+                            //gameDeal.OnSale  ,
+                            "1",
+                            gameDeal.savings ,
+                            gameDeal.metacriticScore ,
+                            gameDeal.steamRatingText ,
+                            gameDeal.steamRatingPercent ,
+                            gameDeal.steamRatingCount ,
+                            gameDeal.steamAppID ,
+                            gameDeal.releaseDate ,
+                            gameDeal.lastChange ,
+                            gameDeal.dealRating ,
+                            gameDeal.thumb
+                        ))
+                    },
+
+                    )
         ) {
 
-
-            /*Icon(
-                painterResource(R.drawable.ic_launcher_background),
-                modifier = Modifier.padding(start = 15.dp, end = 10.dp),
-                contentDescription = null,
-                tint =  Color.White
-            )*/
             val store = Stores.find { it.storeID == gameDeal.storeID}
 
                 AsyncImage(
@@ -248,12 +243,6 @@ fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel,Stores :
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            /*Icon(
-                painterResource(R.drawable.baseline_android_24),
-                modifier = Modifier.padding(start = 15.dp, end = 10.dp),
-                contentDescription = null,
-                tint =  Color.White
-            )*/
 
             val store = Stores.find { it.storeID == wishlistGame.storeID}
 

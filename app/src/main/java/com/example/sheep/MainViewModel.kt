@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel(application: Application) : ViewModel() {
+    var selectedGameDeal: GameDeal? = null
     val allWishlists: LiveData<List<WishlistGame>>
     private val repository: WishlistRepository
     val searchResults: MutableLiveData<List<WishlistGame>>

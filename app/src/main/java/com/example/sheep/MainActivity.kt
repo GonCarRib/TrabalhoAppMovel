@@ -36,9 +36,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.sheep.ui.theme.backgroundBotaoColor
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,6 +75,116 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Composable
+fun BottomNavigationBar(
+    navController: NavController,
+    appItems: List<Destino>,
+    modifier: Modifier = Modifier
+) {
+    BottomNavigation(
+        modifier = modifier.height(90.dp),
+        backgroundColor = MaterialTheme.colorScheme.backgroundBotaoColor,
+        contentColor = Color.White
+    ){
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        appItems.forEach { item ->
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        painterResource(item.icon),
+                        modifier = Modifier.size(60.dp).padding(top = 10.dp, bottom = 10.dp),
+                        contentDescription = item.title,
+                        tint = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        color = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
+                    )
+                },
+                alwaysShowLabel = true,
+                selected = currentRoute == item.route,
+                onClick = {
+                    navController.navigate(item.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) { saveState = true }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+
+
+@Composable
+fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController,
+                modifier = modifier,
+                appItems = Destino.toList,
+            ) },
+        content = { padding ->
+            Box(modifier = Modifier.padding(padding)) {
+                AppNavigation(
+                    navController = navController,
+                    modifier = modifier,
+                    viewModel = viewModel
+                )
+            }
+        }
+    )
+}
+
+
+
+
+@Composable
+fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, viewModel: MainViewModel) {
+    val allWishlists by viewModel.allWishlists.observeAsState(listOf())
+    val searchResults by viewModel.searchResults.observeAsState(listOf())
+    val deals = remember { mutableStateListOf<GameDeal>() }
+    val stores = remember { mutableStateListOf<Store>() }
+    val context = LocalContext.current
+    getDataGames(deals, context)
+    getDataStore(stores,context)
+
+    NavHost(navController, startDestination = Destino.EcraHome.route) {
+        composable(Destino.EcraHome.route) {
+            EcraHome(
+                modifier = modifier,
+                viewModel = viewModel,
+                gameDeals = deals,
+                Stores = stores,
+                navController
+            )
+        }
+        composable(Destino.EcraWishlist.route) {
+            EcraWishlist(
+                allWishlists = allWishlists,
+                searchResults = searchResults,
+                viewModel = viewModel,
+                Stores = stores
+            )
+        }
+        composable(Destino.EcraGame.route) {
+            EcraGame(
+                viewModel = viewModel,
+                Stores = stores,
+                navController = navController
+            )
+        }
+    }
+}
+
 
 fun getDataGames(deals: MutableList<GameDeal>, context: Context) {
     val retrofitClient = NetworkUtils
@@ -114,123 +228,8 @@ fun getDataStore(stores: MutableList<Store>, context: Context) {
     })
 }
 
-@Composable
-fun ScreenSetup(modifier: Modifier = Modifier, viewModel: MainViewModel) {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(
-                navController = navController,
-                modifier = modifier,
-                appItems = Destino.toList,
-                ) },
-        content = { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-                AppNavigation(
-                    navController = navController,
-                    modifier = modifier,
-                    viewModel = viewModel
-                    )
-            }
-        }
-    )
-}
-
-
 class MainViewModelFactory(val application: Application) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(application) as T
     }
 }
-
-@Composable
-fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, viewModel: MainViewModel) {
-    val allWishlists by viewModel.allWishlists.observeAsState(listOf())
-    val searchResults by viewModel.searchResults.observeAsState(listOf())
-    val deals = remember { mutableStateListOf<GameDeal>() }
-    val stores = remember { mutableStateListOf<Store>() }
-    val context = LocalContext.current
-    getDataGames(deals, context)
-    getDataStore(stores,context)
-
-    NavHost(navController, startDestination = Destino.EcraHome.route) {
-        composable(Destino.EcraHome.route) {
-            EcraHome(
-                modifier = modifier,
-                viewModel = viewModel,
-                gameDeals = deals,
-                Stores = stores,
-                navController
-            )
-        }
-        composable(Destino.EcraWishlist.route) {
-            EcraWishlist(
-                allWishlists = allWishlists,
-                searchResults = searchResults,
-                viewModel = viewModel,
-                Stores = stores
-            )
-        }
-        /*composable(Destino.EcraGame.route) {
-            EcraHome()
-        }*/
-    }
-}
-
-
-
-@Composable
-fun BottomNavigationBar(
-    navController: NavController,
-    appItems: List<Destino>,
-    modifier: Modifier = Modifier
-) {
-    BottomNavigation(
-        modifier = modifier.height(90.dp),
-        backgroundColor = MaterialTheme.colorScheme.backgroundBotaoColor,
-        contentColor = Color.White
-    ){
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        appItems.forEach { item ->
-            BottomNavigationItem(
-                icon = {
-                    Icon(
-                        painterResource(R.drawable.baseline_android_24),
-                        modifier = Modifier.size(60.dp).padding(top = 10.dp, bottom = 10.dp),
-                        contentDescription = item.title,
-                        tint = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
-                    )
-                },
-                label = {
-                    Text(
-                        text = item.title,
-                        color = if (currentRoute == item.route) Color.White else Color.White.copy(.2F)
-                    )
-                },
-                alwaysShowLabel = true,
-                selected = currentRoute == item.route,
-                onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
