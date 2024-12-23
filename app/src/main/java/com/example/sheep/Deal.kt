@@ -11,7 +11,7 @@ data class GameDeal(
     val title: String,
 
     @SerializedName("metacriticLink")
-    val metacriticLink: String,
+    var metacriticLink: String,
 
     @SerializedName("dealID")
     val dealID: String,
@@ -38,7 +38,7 @@ data class GameDeal(
     val metacriticScore: String,
 
     @SerializedName("steamRatingText")
-    val steamRatingText: String,
+    var steamRatingText: String,
 
     @SerializedName("steamRatingPercent")
     val steamRatingPercent: String,
@@ -47,7 +47,7 @@ data class GameDeal(
     val steamRatingCount: String,
 
     @SerializedName("steamAppID")
-    val steamAppID: String,
+    var steamAppID: String,
 
     @SerializedName("releaseDate")
     val releaseDate: Long,
