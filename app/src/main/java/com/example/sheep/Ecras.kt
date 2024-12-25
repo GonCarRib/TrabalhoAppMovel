@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -100,7 +101,7 @@ fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHo
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(30.dp))
+                    .clip(RoundedCornerShape(40.dp))
                     .background(color = MaterialTheme.colorScheme.backgroundBotaoColor)
             )
             {
@@ -190,50 +191,51 @@ fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHo
                             color = Color.Cyan
                         )
                     }
-                    Icon(
-                        painter = painterResource(R.drawable.wishlist),
-                        contentDescription = "",
-                        tint = Color.White,
-                        modifier = Modifier
-                            .clickable {
-                                if(gameDeal.metacriticLink == null){
-                                    gameDeal.metacriticLink = "/"
-                                }
-                                if(gameDeal.steamRatingText == null){
-                                    gameDeal.steamRatingText = ""
-                                }
-                                if(gameDeal.steamAppID == null){
-                                    gameDeal.steamAppID = ""
-                                }
-                                viewModel.insertWishlist(WishlistGame(
-                                    gameDeal.internalName,
-                                    gameDeal.title ,
-                                    gameDeal.metacriticLink ,
-                                    gameDeal.dealID ,
-                                    gameDeal.storeID ,
-                                    gameDeal.gameID ,
-                                    5f , //LastPrice meter depois
-                                    gameDeal.salePrice,
-                                    gameDeal.normalPrice ,
-                                    //gameDeal.OnSale  ,
-                                    "1",
-                                    gameDeal.savings ,
-                                    gameDeal.metacriticScore ,
-                                    gameDeal.steamRatingText ,
-                                    gameDeal.steamRatingPercent ,
-                                    gameDeal.steamRatingCount ,
-                                    gameDeal.steamAppID ,
-                                    gameDeal.releaseDate ,
-                                    gameDeal.lastChange ,
-                                    gameDeal.dealRating ,
-                                    gameDeal.thumb
-                                ))
-                            }
-                            .padding(end = 10.dp, top = 20.dp)
-                            .size(50.dp)
-                            .align(Alignment.End)
-                    )
+
                 }
+                Icon(
+                    painter = painterResource(R.drawable.wishlist),
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .clickable {
+                            if(gameDeal.metacriticLink == null){
+                                gameDeal.metacriticLink = "/"
+                            }
+                            if(gameDeal.steamRatingText == null){
+                                gameDeal.steamRatingText = ""
+                            }
+                            if(gameDeal.steamAppID == null){
+                                gameDeal.steamAppID = ""
+                            }
+                            viewModel.insertWishlist(WishlistGame(
+                                gameDeal.internalName,
+                                gameDeal.title ,
+                                gameDeal.metacriticLink ,
+                                gameDeal.dealID ,
+                                gameDeal.storeID ,
+                                gameDeal.gameID ,
+                                5f ,
+                                gameDeal.salePrice,
+                                gameDeal.normalPrice ,
+                                //gameDeal.OnSale  ,
+                                "1",
+                                gameDeal.savings ,
+                                gameDeal.metacriticScore ,
+                                gameDeal.steamRatingText ,
+                                gameDeal.steamRatingPercent ,
+                                gameDeal.steamRatingCount ,
+                                gameDeal.steamAppID ,
+                                gameDeal.releaseDate ,
+                                gameDeal.lastChange ,
+                                gameDeal.dealRating ,
+                                gameDeal.thumb
+                            ))
+                        }
+                        .padding(end = 20.dp, bottom = 20.dp)
+                        .size(50.dp)
+                        .align(alignment = Alignment.BottomEnd)
+                )
             }
     }
 }
@@ -321,9 +323,9 @@ fun GameDealButton(gameDeal: GameDeal, viewModel: MainViewModel,Stores : List<St
             Spacer(modifier = Modifier.padding(end = 70.dp))
 
             Text(
-                gameDeal.salePrice.toString() + "€",
+                gameDeal.salePrice + "€",
                 color = Color.White,
-                modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
+                modifier = Modifier.align(Alignment.CenterVertically).weight(15f)
             )
         }
     }
@@ -371,13 +373,13 @@ fun WishlistButton(wishlistGame: WishlistGame, viewModel: MainViewModel,Stores :
                 Text(
                     wishlistGame.salePrice + "€",
                     color = Color.Green,
-                    modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
+                    modifier = Modifier.align(Alignment.CenterVertically).weight(15f)
                 )
             }else{
                 Text(
                     wishlistGame.salePrice + "€",
                     color = Color.Red,
-                    modifier = Modifier.align(Alignment.CenterVertically).weight(10f)
+                    modifier = Modifier.align(Alignment.CenterVertically).weight(15f)
                 )
             }
 
@@ -416,11 +418,15 @@ fun InfoDeal() {
             "Game",
             color = Color.White,
             modifier = Modifier
+
+
+                .size(170.dp)
+                .wrapContentHeight(align = Alignment.CenterVertically)
         )
 
         VerticalDivider(
             modifier = Modifier
-                .padding(start = 160.dp , end = 15.dp)
+                .padding(end = 15.dp)
                 .fillMaxHeight()
                 .width(1.dp),
             color = Color.White
