@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
@@ -56,7 +55,6 @@ fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals
                 viewModel = viewModel,
                 Stores = Stores,
                 navController
-
             )
         }
     }

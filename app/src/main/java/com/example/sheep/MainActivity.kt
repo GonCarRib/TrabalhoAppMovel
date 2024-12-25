@@ -36,13 +36,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.example.sheep.ui.theme.backgroundBotaoColor
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +49,6 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             SheepTheme{
-
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val owner = LocalViewModelStoreOwner.current
                     owner?.let {
