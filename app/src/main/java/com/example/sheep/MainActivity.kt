@@ -108,7 +108,7 @@ fun BottomNavigationBar(
                             popUpTo(route) { saveState = true }
                         }
                         launchSingleTop = true
-                        restoreState = true
+                        restoreState = false
                     }
                 }
             )
@@ -155,7 +155,6 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     NavHost(navController, startDestination = Destino.EcraHome.route) {
         composable(Destino.EcraHome.route) {
             EcraHome(
-                modifier = modifier,
                 viewModel = viewModel,
                 gameDeals = deals,
                 Stores = stores,
@@ -174,6 +173,15 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             EcraGame(
                 viewModel = viewModel,
                 Stores = stores,
+                deals,
+                navController = navController
+            )
+        }
+        composable(Destino.EcraGameStore.route) {
+            EcraGameStore(
+                viewModel = viewModel,
+                Stores = stores,
+                deals,
                 navController = navController
             )
         }

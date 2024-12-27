@@ -41,7 +41,7 @@ import com.example.sheep.ui.theme.backgroundColor
 
 
 @Composable
-fun EcraHome(modifier: Modifier = Modifier,  viewModel: MainViewModel, gameDeals : List<GameDeal>,Stores : List<Store>,navController: NavHostController) {
+fun EcraHome(viewModel: MainViewModel, gameDeals : List<GameDeal>,Stores : List<Store>,navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,7 +86,7 @@ fun EcraWishlist(allWishlists: List<WishlistGame>, searchResults: List<WishlistG
 
 
 @Composable
-fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHostController) {
+fun EcraGame(viewModel: MainViewModel, Stores: List<Store>,gameDeals : List<GameDeal>, navController: NavHostController) {
     val gameDeal = viewModel.selectedGameDeal!!
     val uriHandler = LocalUriHandler.current
     val store = Stores.find { it.storeID == gameDeal.storeID}
@@ -192,6 +192,21 @@ fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHo
                         )
                     }
 
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 15.dp, top = 25.dp)
+                    ) {
+                        Text("Other Stores",
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(Destino.EcraGameStore.route)
+                                },
+                            color = Color.Cyan
+                        )
+                    }
+
                 }
                 Icon(
                     painter = painterResource(R.drawable.wishlist),
@@ -238,6 +253,33 @@ fun EcraGame(viewModel: MainViewModel, Stores: List<Store>, navController: NavHo
                 )
             }
     }
+}
+
+
+@Composable
+fun EcraGameStore(viewModel: MainViewModel, Stores: List<Store>,gameDeals : List<GameDeal>, navController: NavHostController) {
+    val gameDeal = viewModel.selectedGameDeal!!
+
+    val games = gameDeals.filter { it.gameID == gameDeal.gameID}
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(color = MaterialTheme.colorScheme.backgroundColor)
+            .padding(top = 65.dp)
+            .padding(10.dp)
+    ) {
+        items(games) { game ->
+            GameDealButton(
+                game,
+                viewModel = viewModel,
+                Stores = Stores,
+                navController
+            )
+        }
+    }
+    InfoDeal()
 }
 
 
